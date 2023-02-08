@@ -8,17 +8,62 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <div id="Q-container" class="Q-css">
-            <div id="question">question</div>
-            <div class="answer-container">
-                <button class="btn">Answer1</button>
-                <button class="btn">Answer2</button>
-                <button class="btn">Answer3</button>
-                <button class="btn">Answer4</button>
-            </div>    
-        </div>
-    </div>
+    <!-- first section for score and timer -->
+    <header class="score-timer">
+        <h1><button id="score" type="button" class="btn-h1">High Score</button></h1>
+        <h2>Time left:100s</h2>
+    </header>
+    <!-- main section for question and answers -->
+    <main>
+        <section class="container">
+            <div id="Q-container" class="Q-css">
+                <div id="question">Question</div> 
+                <div class="answer-container">
+                    <button id="answer1" value="0" type="button" class="btn">Answer1</button>
+                    <button id="answer2" value="0" type="button" class="btn">Answer2</button>
+                    <button id="answer3" value="0" type="button" class="btn">Answer3</button>
+                    <button id="answer4" value="0" type="button" class="btn">Answer4</button>
+                </div>    
+            </div> 
+        </section>
+        <!-- section for record -->
+        <section id="final">
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <h2>ALL DONE</h2>
+                    <p>Your final score is <span id="score" class="pl-1">0</span></p>
+                    <p>Enter initials: <span class="ml-1"><input placeholder="initials" id="initials" /></span>
+                        <button id="submit-score" class="btn-score">Submit</button>
+                    </p>
+                </div>
+            </div>
+        </section>
+        <section id="Highscores">
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <h2>High Scores</h2>
+                    <ol id="score-record"></ol>
+                    <button id="goback" class="btn-goback">Try again</button>
+                    <button id="clearscores" class="btn-clear">Clear score</button>
+                </div>
+            </div>
+        </section>          
+    </main>
+    <!-- Javascript -->
+    <script src="java.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script> 
+
+
     
 </body>
 </html>

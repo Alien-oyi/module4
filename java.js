@@ -1,6 +1,6 @@
-{
-    "response_code": 0,
-    "results": [
+// questions bank
+var quizQuestions =
+     [
         {
             "category": "Entertainment: Comics",
             "correct_answer": "Thomas &amp; Martha",
@@ -122,4 +122,4 @@
             "type": "multiple"
         }
     ]
-}
+

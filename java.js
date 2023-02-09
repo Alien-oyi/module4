@@ -1,11 +1,33 @@
-// questions bank
+//  get HTML elements ready
+var quizBody = document.getElementById("quiz");
+var resultsEl = document.getElementById("result");
+var finalScoreEl = document.getElementById("finalScore");
+var gameoverDiv = document.getElementById("gameover");
+var questionsEl = document.getElementById("questions");
+var quizTimer = document.getElementById("timer");
+var startQuizButton = document.getElementById("startbtn");
+var startQuizDiv = document.getElementById("startpage");
+var highscoreContainer = document.getElementById("highscoreContainer");
+var highscoreDiv = document.getElementById("high-scorePage");
+var highscoreInputName = document.getElementById("initials");
+var highscoreDisplayName = document.getElementById("highscore-initials");
+var endGameBtns = document.getElementById("endGameBtns");
+var submitScoreBtn = document.getElementById("submitScore");
+var highscoreDisplayScore = document.getElementById("highscore-score");
+var buttonA = document.getElementById("a");
+var buttonB = document.getElementById("b");
+var buttonC = document.getElementById("c");
+var buttonD = document.getElementById("d");
+
+// generata question from trivia database,and fix some dota type to fetch
 var quizQuestions =
      [
         {
             "category": "Entertainment: Comics",
-            "correct_answer": "Thomas &amp; Martha",
+            correct_answer: "a",
             "difficulty": "medium",
-            "incorrect_answers": [
+            answers: [
+                "Thomas &amp; Martha",
                 "Joey &amp; Jackie",
                 "Jason &amp; Sarah",
                 "Todd &amp; Mira"
@@ -15,10 +37,11 @@ var quizQuestions =
         },
         {
             "category": "Entertainment: Film",
-            "correct_answer": "Bruce Lee",
+            correct_answer: "b",
             "difficulty": "easy",
-            "incorrect_answers": [
+            answers: [
                 "Jackie Chan",
+                "Bruce Lee",
                 "Jet Li",
                 " Yun-Fat Chow"
             ],
@@ -27,10 +50,11 @@ var quizQuestions =
         },
         {
             "category": "Science: Computers",
-            "correct_answer": "50",
+            correct_answer: "b",
             "difficulty": "hard",
-            "incorrect_answers": [
+            answers: [
                 "59",
+                "50",
                 "60",
                 "25"
             ],
@@ -39,10 +63,11 @@ var quizQuestions =
         },
         {
             "category": "Geography",
-            "correct_answer": "Sweden",
+            correct_answer: "b",
             "difficulty": "medium",
-            "incorrect_answers": [
+            answers: [
                 "Denmark",
+                "Sweden",
                 "Norway",
                 "Germany"
             ],
@@ -51,9 +76,10 @@ var quizQuestions =
         },
         {
             "category": "History",
-            "correct_answer": "Guy Fawkes",
+            correct_answer: "a",
             "difficulty": "medium",
-            "incorrect_answers": [
+            answers: [
+                "Guy Fawkes",
                 "Robert Catesby",
                 "Francis Tresham",
                 "Everard Digby"
@@ -63,11 +89,12 @@ var quizQuestions =
         },
         {
             "category": "History",
-            "correct_answer": "July 16, 1945",
+            correct_answer: "c",
             "difficulty": "medium",
-            "incorrect_answers": [
+            answers: [
                 "June 22, 1945",
                 "August 6, 1945",
+                "July 16, 1945",
                 "April 5, 1945"
             ],
             "question": "When was &quot;The Gadget&quot;, the first nuclear device to be detonated, tested?",
@@ -75,10 +102,11 @@ var quizQuestions =
         },
         {
             "category": "Entertainment: Video Games",
-            "correct_answer": "Markus Persson",
+            correct_answer: "b",
             "difficulty": "easy",
-            "incorrect_answers": [
+            answers: [
                 "Jens Bergensten",
+                "Markus Persson",
                 "Daniel Rosenfeld",
                 "Carl Manneh"
             ],
@@ -87,11 +115,12 @@ var quizQuestions =
         },
         {
             "category": "Entertainment: Video Games",
-            "correct_answer": "Singing into a Microphone",
+            correct_answer: "c",
             "difficulty": "hard",
-            "incorrect_answers": [
+            answers: [
                 "Playing a Piano",
                 "Using a Composer Software",
+                "Singing into a Microphone",
                 "Listened to birds at the park"
             ],
             "question": "According to Toby Fox, what was the method to creating the initial tune for Megalovania?",
@@ -99,9 +128,10 @@ var quizQuestions =
         },
         {
             "category": "Art",
-            "correct_answer": "Copic",
+            correct_answer: "a",
             "difficulty": "medium",
-            "incorrect_answers": [
+            answers: [
+                "Copic",
                 "Dopix",
                 "Cofix",
                 "Marx"
@@ -111,10 +141,11 @@ var quizQuestions =
         },
         {
             "category": "Entertainment: Music",
-            "correct_answer": "1993",
+            correct_answer: "b",
             "difficulty": "hard",
-            "incorrect_answers": [
+            answers: [
                 "1992",
+                "1993",
                 "1995",
                 "1994"
             ],
@@ -122,4 +153,43 @@ var quizQuestions =
             "type": "multiple"
         }
     ]
+//  global variables
+var finalQuestionIndex = quizQuestions.length;
+var currentQuestionIndex = 0;
+var timeLeft = 76;
+var timerInterval;
+var score = 0;
+var correct;
+
+// This function cycles through the object array containing the quiz questions to generate the questions and answers.
+function generateQuizQuestion(){
+    if (currentQuestionIndex === finalQuestionIndex){
+        return showScore();
+    } 
+    var currentQuestion = quizQuestions[currentQuestionIndex];
+    questionsEl.innerHTML = "<p>" + currentQuestion.question + "</p>";
+    buttonA.innerHTML = currentQuestion.answers[0];
+    buttonB.innerHTML = currentQuestion.answers[1];
+    buttonC.innerHTML = currentQuestion.answers[2];
+    buttonD.innerHTML = currentQuestion.answers[3];
+};
+
+// Start Quiz function starts the TimeRanges, hides the start button, and displays the first quiz question.
+function startQuiz(){
+    gameoverDiv.style.display = "none";
+    startQuizDiv.style.display = "none";
+    generateQuizQuestion();
+
+    //Timer
+    timerInterval = setInterval(function() {
+        timeLeft--;
+        quizTimer.textContent = "Time left: " + timeLeft;
+    
+        if(timeLeft === 0) {
+          clearInterval(timerInterval);
+          showScore();
+        }
+      }, 1000);
+    quizBody.style.display = "block";
+}
 

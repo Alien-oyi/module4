@@ -9,3 +9,5 @@
 **setInterval funtion for time countdown**
 
 **local storage for saving highscore**
+
+**change score calcalation to "score+timeleft"**

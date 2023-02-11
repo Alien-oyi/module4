@@ -158,9 +158,9 @@ var finalQuestionIndex = quizQuestions.length;
 var currentQuestionIndex = 0;
 var timeLeft = 100;
 var timerInterval;
-var score = 0;
+var point = 0;
 var correct;
-var point;
+var score;
 
 
 
@@ -200,32 +200,34 @@ function startQuiz(){
 
 function checkAnswer(answer){
     correct = quizQuestions[currentQuestionIndex].correct_answer;
-    if (answer === correct && currentQuestionIndex !== finalQuestionIndex){
-        score+=5;
+    if (answer === correct && currentQuestionIndex < finalQuestionIndex+2){
+        point+=5;
         document.querySelector("#timer").setAttribute("style","background-color:green")
         currentQuestionIndex++;
         generateQuizQuestion();
         //display in the results div that the answer is correct.
-    }else if (answer !== correct && currentQuestionIndex !== finalQuestionIndex){
+    }else if (answer !== correct && currentQuestionIndex <= finalQuestionIndex){
         document.querySelector("#timer").setAttribute("style","background-color:red")
         // if there is no time left,stop the game
         timeLeft = timeLeft - 10;
+        
         if (timeLeft<=0) {
             return showScore()
         }
         currentQuestionIndex++;
         generateQuizQuestion();
-    }else{  
+    }else {
         showScore();
-        }
-    } 
+    }       
+}
 
 function showScore(){
     quizBody.style.display = "none"
     gameoverDiv.style.display = "flex";
     clearInterval(timerInterval);
     highscoreInputName.value = "";
-    finalScoreEl.innerHTML = `You got  ${score} point`;
+    score = point + timeLeft;
+    finalScoreEl.innerHTML = `Your score is: ${score} `;
 }
 
 
@@ -296,6 +298,7 @@ function replayQuiz(){
     startQuizDiv.style.display = "flex";
     timeLeft = 100;
     score = 0;
+    point = 0
     currentQuestionIndex = 0;
 }
 

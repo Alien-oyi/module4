@@ -160,6 +160,7 @@ var timeLeft = 100;
 var timerInterval;
 var score = 0;
 var correct;
+var point;
 
 
 
@@ -214,8 +215,8 @@ function checkAnswer(answer){
         }
         currentQuestionIndex++;
         generateQuizQuestion();
-    }else{ 
-         showScore();
+    }else{  
+        showScore();
         }
     } 
 
@@ -223,8 +224,8 @@ function showScore(){
     quizBody.style.display = "none"
     gameoverDiv.style.display = "flex";
     clearInterval(timerInterval);
-    highscoreInputName.value = ""; 
-    finalScoreEl.innerHTML = "You got " + score + "point";
+    highscoreInputName.value = "";
+    finalScoreEl.innerHTML = `You got  ${score} point`;
 }
 
 
@@ -239,7 +240,7 @@ submitScoreBtn.addEventListener("click", function highscore(){
         
         var currentHighscore = {
             name : currentUser,
-            score : score 
+            score : score
         };
     
         gameoverDiv.style.display = "none";

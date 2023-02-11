@@ -19,7 +19,7 @@ var buttonB = document.getElementById("b");
 var buttonC = document.getElementById("c");
 var buttonD = document.getElementById("d");
 
-// generata question from trivia database,and fix some dota type to fetch
+// generata question from trivia database,and fix some data type to fetch
 var quizQuestions =
      [
         {
@@ -156,10 +156,12 @@ var quizQuestions =
 //  global variables
 var finalQuestionIndex = quizQuestions.length;
 var currentQuestionIndex = 0;
-var timeLeft = 76;
+var timeLeft = 100;
 var timerInterval;
 var score = 0;
 var correct;
+
+
 
 // This function cycles through the object array containing the quiz questions to generate the questions and answers.
 function generateQuizQuestion(){
@@ -185,7 +187,7 @@ function startQuiz(){
         timeLeft--;
         quizTimer.textContent = "Time left: " + timeLeft;
     
-        if(timeLeft === 0) {
+        if(timeLeft <= 0) {
           clearInterval(timerInterval);
           showScore();
         }
@@ -193,28 +195,51 @@ function startQuiz(){
     quizBody.style.display = "block";
 }
 
+// This function checks the response to each answer 
+
+function checkAnswer(answer){
+    correct = quizQuestions[currentQuestionIndex].correct_answer;
+    if (answer === correct && currentQuestionIndex !== finalQuestionIndex){
+        score+=5;
+        document.querySelector("#timer").setAttribute("style","background-color:green")
+        currentQuestionIndex++;
+        generateQuizQuestion();
+        //display in the results div that the answer is correct.
+    }else if (answer !== correct && currentQuestionIndex !== finalQuestionIndex){
+        document.querySelector("#timer").setAttribute("style","background-color:red")
+        // if there is no time left,stop the game
+        timeLeft = timeLeft - 10;
+        if (timeLeft<=0) {
+            return showScore()
+        }
+        currentQuestionIndex++;
+        generateQuizQuestion();
+    }else{ 
+         showScore();
+        }
+    } 
+
 function showScore(){
     quizBody.style.display = "none"
     gameoverDiv.style.display = "flex";
     clearInterval(timerInterval);
-    highscoreInputName.value = "";
-    finalScoreEl.innerHTML = "You got " + score + " out of " + quizQuestions.length + " correct!";
+    highscoreInputName.value = ""; 
+    finalScoreEl.innerHTML = "You got " + score + "point";
 }
 
 
 // highscore
 submitScoreBtn.addEventListener("click", function highscore(){
-    
-    
     if(highscoreInputName.value === "") {
         alert("Initials cannot be blank");
         return false;
     }else{
         var savedHighscores = JSON.parse(localStorage.getItem("savedHighscores")) || [];
         var currentUser = highscoreInputName.value.trim();
+        
         var currentHighscore = {
             name : currentUser,
-            score : score
+            score : score 
         };
     
         gameoverDiv.style.display = "none";
@@ -229,3 +254,50 @@ submitScoreBtn.addEventListener("click", function highscore(){
     }
     
 });
+
+//  generates a new high score list from local storage
+function generateHighscores(){
+    highscoreDisplayName.innerHTML = "";
+    highscoreDisplayScore.innerHTML = "";
+    var highscores = JSON.parse(localStorage.getItem("savedHighscores")) || [];
+    for (i=0; i<highscores.length; i++){
+        var newNameSpan = document.createElement("li");
+        var newScoreSpan = document.createElement("li");
+        newNameSpan.textContent = highscores[i].name;
+        newScoreSpan.textContent = highscores[i].score;
+        highscoreDisplayName.appendChild(newNameSpan);
+        highscoreDisplayScore.appendChild(newScoreSpan);
+    }
+}
+
+// displays the high scores page 
+function showHighscore(){
+    startQuizDiv.style.display = "none"
+    gameoverDiv.style.display = "none";
+    highscoreContainer.style.display = "flex";
+    highscoreDiv.style.display = "block";
+    endGameBtns.style.display = "flex";
+
+    generateHighscores();
+}
+
+//  clears  high scores button
+function clearScore() { 
+    window.localStorage.clear();
+    highscoreDisplayName.textContent = "";
+    highscoreDisplayScore.textContent = "";
+}
+
+// replay button
+function replayQuiz(){
+    highscoreContainer.style.display = "none";
+    gameoverDiv.style.display = "none";
+    startQuizDiv.style.display = "flex";
+    timeLeft = 100;
+    score = 0;
+    currentQuestionIndex = 0;
+}
+
+
+// This button starts the quiz!
+startQuizButton.addEventListener("click",startQuiz);

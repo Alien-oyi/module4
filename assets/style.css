@@ -1,5 +1,5 @@
 :root{
-    --cale-normal:200;
+    --bule-main:200;
     background-color: rgb(224, 233, 253);
 }
 
@@ -40,7 +40,7 @@ input{
   button {
     display: inline-block;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    --blue:var(--cale-normal);
+    --blue:var(--bule-main);
     background-color: hsl(var(--blue),100%,50%);
     border-radius: 10px;
     border: 3px double #cccccc;
@@ -64,7 +64,7 @@ input{
 
 #timer{
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    --blue:var(--cale-normal);
+    --blue:var(--bule-main);
     background-color: hsl(var(--blue),100%,40%);
     color: #eeeeee;
     font-size: x-large;
@@ -140,8 +140,7 @@ input{
 }
 
 #endGameBtns,
-#quiz,
-#result {
+#quiz {
     display: none;
 }
 

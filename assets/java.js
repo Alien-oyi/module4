@@ -1,6 +1,5 @@
 //  get HTML elements ready
 var quizBody = document.getElementById("quiz");
-var resultsEl = document.getElementById("result");
 var finalScoreEl = document.getElementById("finalScore");
 var gameoverDiv = document.getElementById("gameover");
 var questionsEl = document.getElementById("questions");
@@ -200,7 +199,7 @@ function startQuiz(){
 
 function checkAnswer(answer){
     correct = quizQuestions[currentQuestionIndex].correct_answer;
-    if (answer === correct && currentQuestionIndex < finalQuestionIndex+2){
+    if (answer === correct && currentQuestionIndex <= finalQuestionIndex){
         point+=5;
         document.querySelector("#timer").setAttribute("style","background-color:green")
         currentQuestionIndex++;
